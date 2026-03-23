@@ -44,6 +44,20 @@
 
     </footer>
 
+        <?php
+    $con = mysqli_connect('localhost','root','','sklep');
+    $login = $_POST['login'] ?? '';
+    $haslo1 = $_POST['password'] ?? '';
+    $haslo2 = $_POST['password2'] ?? '';
+    $sql = "INSERT INTO loginy (login, haslo) values ('$login', '$haslo1')";
+    if($haslo1 == $haslo2){
+        mysqli_query($con, $sql);
+    }
+    else{
+        echo "Hasła sie różnią";
+    }
+    mysqli_close($con);
+    ?>
     <script>
         function login(){
             return 0;
