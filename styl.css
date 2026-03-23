@@ -1,6 +1,33 @@
 *{
     font-family: Bradley Hand, cursive;
 }
-body{
-    height: 100vh;
+#leftHeader{
+    width: 50%;
+    height: 20%;
+    float: left;
+}
+#rightHeader{
+    width: 50%;
+    float: left;
+    height: 20%;
+}
+#leftMain{
+    width: 33%;
+    height: 60%;
+    float: left;
+}
+#centerMain{
+    width: 33%;
+    height: 60%;
+    float: left;
+}
+#rightMain{
+    width: 33%;
+    height: 60%;
+    float: left;
+}
+footer{
+    clear: both;
+    text-align: center;
+    margin: 10px;
 }
