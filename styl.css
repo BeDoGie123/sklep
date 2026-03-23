@@ -1,6 +1,17 @@
 *{
     font-family: Bradley Hand, cursive;
 }
+body{
+    height: 100vh;
+}
+header{
+    width: 100%;
+    height: 20%;
+}
+main{
+    width: 100%;
+    height: 60%;
+}
 #leftHeader{
     width: 50%;
     height: 20%;
@@ -10,24 +21,38 @@
     width: 50%;
     float: left;
     height: 20%;
+    text-align: right;
 }
 #leftMain{
     width: 33%;
-    height: 60%;
+    height: 100%;
     float: left;
 }
 #centerMain{
     width: 33%;
-    height: 60%;
+    height: 100%;
     float: left;
 }
 #rightMain{
     width: 33%;
-    height: 60%;
+    height: 100%;
     float: left;
 }
 footer{
+    height: 20%;
     clear: both;
     text-align: center;
     margin: 10px;
+}
+#loginSection{
+    margin: 100px;
+    width: 200px;
+    height: 300px;
+    display:none;
+}
+#createUserSection{
+    margin: 100px;
+    width: 200px;
+    height: 300px;
+    /*display:none;*/
 }
