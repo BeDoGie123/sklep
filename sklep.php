@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -10,10 +13,19 @@
 <body>
     <header>
         <aside id="leftHeader">
-            <img src="shopping-store.png" alt="ikonka sklepu" onclick="main()">
+            <img src="shopping-store.png" alt="ikonka sklepu">
         </aside>
         <aside id="rightHeader">
-            <button onclick="login()">Zaloguj się</button>
+            <form action="sklep.php" method="POST">
+                <?php echo $_SESSION['user']; ?>
+                <input type="submit" value="Wyloguj się" name="wylogujBtn">
+                <?php  
+                    if(isset($_POST['wylogujBtn'])){
+                        header("Location:wyloguj.php");
+                        exit;
+                    }
+                ?>
+            </form>
         </aside>
     </header>
 
@@ -24,81 +36,20 @@
         ?>
         <aside id="leftMain"></aside>
         <section id="centerMain">
-            <section id="loginSection">
-                <p>Zaloguj się</p><br />
-                <form action="sklep.php" method="POST">
-                    login<br /><input type="text" name="login" id="login"><br /><br />
-                    hasło<br /><input type="password" name="password" id="passwordLogin"><br /><br />
-                    <input type="submit" value="Zaloguj" id="loginButton">
-                    <sub><em onclick="createUser()">Utwórz konto</em></sub>
-                </form>
-                <?php
-                    $l="";
-                    $h="";
-                    if(isset($_POST["login"])&&isset($_POST["password"])){
-                        $l=$_POST["login"];
-                        $h=sha1($_POST["password"]);
-                        $query="SELECT login,haslo FROM login WHERE login=$l AND haslo=$h";
-                        $result=mysqli_query($conn,$query);
-                        if(mysqli_num_rows($result)==0){
-                            echo "zalogowano pomyślnie";
-                        }
-                        else{
-                            echo "złe dane";
-                        }
-                    }  
-                ?>
-            </section>
-            <section id="createUserSection">
-                <p>Utwórz konto</p><br />
-                <form action="sklep.php" method="POST">
-                    login<br /><input type="text" name="login" id="loginCreated"><br /><br />
-                    hasło<br /><input type="password" name="password" id="passwordFirst"><br />
-                    powtórz hasło<input type="password" name="password2" id="passwordSecond"><br /><br />
-                    <input type="submit" value="Utwórz konto" id="createUserButton">
-                    <sub><em onclick="login()">Zaloguj się</em></sub>
-                </form>
-                <?php
-                    $login = $_POST['login'] ?? '';
-                    $haslo1 = $_POST['password'] ?? '';
-                    $haslo2 = $_POST['password2'] ?? '';
-                    $sql = "INSERT INTO loginy (login, haslo) values ('$login', sha1('$haslo1'))";
-                    if($haslo1 == $haslo2){
-                        mysqli_query($conn, $sql);
-                    }
-                    else{
-                        echo "Hasła sie różnią";
-                    }
-                    
-                ?>
-            </section>
+            
         </section>
         <aside id="rightMain"></aside>
-        <?php
+    </main>
+    
+    <footer>
+        <?php 
+            $sql="SELECT * FROM dane_firmy";
+            $query=mysqli_query($conn,$sql);
+            $result=mysqli_fetch_row($query);
+            echo "<p>$result[2]<br />$result[1]<br />Numer telefonu: $result[0]</p>";
             mysqli_close($conn);
         ?>
-    </main>
-
-    <footer>
-
     </footer>
 
-    <script>
-        function createUser(){
-            document.getElementById('createUserSection').style.display="block";
-            document.getElementById('loginSection').style.display="none";
-        }
-        function login(){
-            document.getElementById('createUserSection').style.display="none";
-            document.getElementById('loginSection').style.display="block";
-        }
-        function main(){
-            document.getElementById('createUserSection').style.display="none";
-            document.getElementById('loginSection').style.display="none";
-        }
-        function logged(){
-            document.getElementsByTagName("button")[0].style.display="none";
-        }
-    </script>
 </body>
 </html>
