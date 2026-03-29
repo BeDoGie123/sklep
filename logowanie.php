@@ -61,9 +61,18 @@
             <section id="createUserSection">
                 <p>Utwórz konto</p><br />
                 <form action="logowanie.php" method="POST">
+
                     login<br /><input type="text" name="loginS" id="loginCreated"><br /><br />
                     hasło<br /><input type="password" name="passwordS" id="passwordFirst"><br />
                     powtórz hasło<input type="password" name="passwordS2" id="passwordSecond"><br /><br />
+                    imie<br /><input type="text" name="imie" id="imie"><br />
+                    nazwisko<br /><input type="text" name="nazwisko" id="nazwisko"><br />
+                    adres<br /><input type="text" name="adres" id="adres"><br />
+                    miasto<br /><input type="text" name="miasto" id="miasto"><br />
+                    kod pocztowy<br /><input type="text" name="postal" id="postal"><br />
+                    numer telefonu<br /><input type="tel" name="telefon" id="telefon"><br />
+                    mail<br /><input type="email" name="mail" id="mail"><br />
+
                     <input type="submit" value="Utwórz konto" id="createUserButton" name="createUserBtn"><br />
                     <sub><em onclick="login()">Zaloguj się</em></sub>
                 </form>
@@ -73,13 +82,35 @@
                     $haslo1 = $_POST['passwordS'];
                     $haslo2 = $_POST['passwordS2'];
 
-                    if($haslo1 == $haslo2){
-                        $sql = "INSERT INTO loginy (login, haslo) VALUES ('$login', sha1('$haslo1'))";
-                        mysqli_query($conn, $sql);
-                        echo "Konto utworzone";
+                    $imie=$_POST['imie'];
+                    $nazwisko=$_POST['nazwisko'];
+                    $adres=$_POST['adres'];
+                    $miasto=$_POST['miasto'];
+                    $postal=$_POST['postal'];
+                    $tel=$_POST['telefon'];
+                    $mail=$_POST['mail'];
+
+                    $query = "SELECT login, haslo FROM loginy WHERE login='$login'";
+                    $result = mysqli_query($conn,$query);
+
+                    if(mysqli_num_rows($result) > 0){
+                        echo "<script>alert('Login zajęty');</script>";
                     } else {
-                        echo "Hasła się różnią";
+                        if($haslo1 == $haslo2&&$login!=""){
+                            $sql = "INSERT INTO loginy (login, haslo) VALUES ('$login', sha1('$haslo1'))";
+                            mysqli_query($conn, $sql);
+                            
+                            $sql="SELECT id_loginu FROM loginy WHERE login='$login'";
+                            $query=mysqli_query($conn, $sql);
+                            $result=mysqli_fetch_row($query);
+    
+                            $sql="INSERT INTO klienci (imie,nazwisko,adres,miasto,kod_pocztowy,telefon,mail,login_id) VALUES ('$imie','$nazwisko','$adres','$miasto','$postal','$tel','$mail','$result[0]')";
+                            mysqli_query($conn,$sql);
+                        } else {
+                            echo "Hasła się różnią";
+                        }
                     }
+
                     }
                 ?>
             </section>
@@ -102,6 +133,7 @@
         function createUser(){
             document.getElementById('createUserSection').style.display="block";
             document.getElementById('loginSection').style.display="none";
+            document.getElementById('info').innerHTML="";
         }
         function login(){
             document.getElementById('createUserSection').style.display="none";

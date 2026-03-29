@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 23, 2026 at 09:22 AM
+-- Generation Time: Mar 29, 2026 at 11:54 PM
 -- Wersja serwera: 10.4.32-MariaDB
 -- Wersja PHP: 8.2.12
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `sklep`
 --
+CREATE DATABASE IF NOT EXISTS `sklep` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `sklep`;
 
 -- --------------------------------------------------------
 
@@ -28,11 +30,17 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `dane_firmy` (
-  `Id_firmy` int(11) NOT NULL,
   `telefon` varchar(30) NOT NULL,
   `mail` varchar(30) NOT NULL,
   `nazwa` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `dane_firmy`
+--
+
+INSERT INTO `dane_firmy` (`telefon`, `mail`, `nazwa`) VALUES
+('XXX-XXX-XXX', 'mailFirmy@gmail.com', 'Sklep spożywczy Mateusza i Bartka');
 
 -- --------------------------------------------------------
 
@@ -105,29 +113,8 @@ CREATE TABLE `klienci` (
 INSERT INTO `klienci` (`id_klienta`, `imie`, `nazwisko`, `adres`, `miasto`, `kod_pocztowy`, `telefon`, `mail`, `login_id`) VALUES
 (2, 'Dominika', 'Włodarczyk', 'ul. Grunwaldzka 38', 'Kuźnica Masłońska', '96-349', '987654321', 'Włodarczyk@gmail.com', NULL),
 (3, 'Igor', 'Janik', 'ul. Baczyńskiego 89', 'Łęczna', '31-775', '373512985', 'Janik@gmail.com', NULL),
-(4, 'Karolina', 'Stankiewicz', 'ul. Bracka 07', 'Koszalin', '01-971', '324345613', 'Stankiewicz@gmail.com', NULL);
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `kurierzy`
---
-
-CREATE TABLE `kurierzy` (
-  `id_kuriera` int(11) NOT NULL,
-  `nazwa` varchar(50) NOT NULL,
-  `mail` varchar(50) NOT NULL,
-  `cena` decimal(10,0) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `kurierzy`
---
-
-INSERT INTO `kurierzy` (`id_kuriera`, `nazwa`, `mail`, `cena`) VALUES
-(1, 'Sobczak', 'Sobczak@gmail.com', 1000),
-(2, 'Kozak', 'Kozak@gmail.com', 1500),
-(3, 'Malinowski', 'Malinowski@gmail.com', 900);
+(4, 'Karolina', 'Stankiewicz', 'ul. Bracka 07', 'Koszalin', '01-971', '324345613', 'Stankiewicz@gmail.com', 60),
+(6, 'bartek', 'gajda', 'ulica 12', 'Pszów', '44-370', '123-456-789', 'moj_mail@gmail.com', 64);
 
 -- --------------------------------------------------------
 
@@ -146,17 +133,8 @@ CREATE TABLE `loginy` (
 --
 
 INSERT INTO `loginy` (`id_loginu`, `login`, `haslo`) VALUES
-(21, 'u1', 'a9993e364706816aba3e25717850c26c9cd0d89d'),
-(22, 'u2', '056eafe7cf52220de2df36845b8ed170c67e23e3'),
-(23, 'u3', 'da89a65e5debe06011418cdf220b2dd71f7b065f'),
-(35, 'u4', 'f10e2821bbbea527ea02200352313bc059445190'),
-(37, 'u4', 'f10e2821bbbea527ea02200352313bc059445190'),
-(38, 'u4', 'f10e2821bbbea527ea02200352313bc059445190'),
-(39, 'u4', 'f10e2821bbbea527ea02200352313bc059445190'),
-(40, 'u4', 'f10e2821bbbea527ea02200352313bc059445190'),
-(41, 'u4', 'f10e2821bbbea527ea02200352313bc059445190'),
-(42, 'u4', 'f10e2821bbbea527ea02200352313bc059445190'),
-(43, 'u4', 'f10e2821bbbea527ea02200352313bc059445190');
+(60, 'a', '86f7e437faa5a7fce15d1ddcb9eaeaea377667b8'),
+(64, 'bartek', '1510bcc82b444bd3d94fed33ba1fa2e72fc0e429');
 
 -- --------------------------------------------------------
 
@@ -180,9 +158,9 @@ CREATE TABLE `produkty` (
 --
 
 INSERT INTO `produkty` (`id_produktu`, `nazwa_produktu`, `cena_produktu`, `ilosc_produktu`, `sztuki`, `id_kategorii`, `id_dostawcy`, `zdjecie`) VALUES
-(1, 'Banan', 4, 6, 1000, 1, 2, NULL),
-(2, 'Bagietka', 7, 1, 30, 2, 3, NULL),
-(3, 'Kapusta', 1, 1, 60, 3, 1, NULL);
+(1, 'jabłko', 4, 6, 985, 1, 2, 'apple.png'),
+(2, 'Bagietka', 7, 1, 17, 2, 3, 'baguette.png'),
+(3, 'Marchewka', 1, 1, 48, 3, 1, 'carrot.png');
 
 -- --------------------------------------------------------
 
@@ -193,31 +171,26 @@ INSERT INTO `produkty` (`id_produktu`, `nazwa_produktu`, `cena_produktu`, `ilosc
 CREATE TABLE `zamowienia` (
   `id_zamowienia` int(11) NOT NULL,
   `id_produktu` int(11) NOT NULL,
-  `id_kuriera` int(11) NOT NULL,
   `id_klienta` int(11) NOT NULL,
   `cena_koncowa` decimal(10,0) NOT NULL,
   `data_zamowienia` date NOT NULL,
-  `data_dostarczenia` date NOT NULL
+  `data_dostarczenia` date NOT NULL,
+  `sztuki` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `zamowienia`
 --
 
-INSERT INTO `zamowienia` (`id_zamowienia`, `id_produktu`, `id_kuriera`, `id_klienta`, `cena_koncowa`, `data_zamowienia`, `data_dostarczenia`) VALUES
-(1, 1, 1, 2, 4, '2026-01-16', '2026-01-20'),
-(2, 2, 2, 3, 7, '2026-02-10', '2026-02-13'),
-(3, 3, 3, 4, 1, '2026-02-02', '2026-02-06');
+INSERT INTO `zamowienia` (`id_zamowienia`, `id_produktu`, `id_klienta`, `cena_koncowa`, `data_zamowienia`, `data_dostarczenia`, `sztuki`) VALUES
+(12, 1, 4, 8, '2026-03-29', '0000-00-00', 2),
+(13, 3, 4, 1, '2026-03-29', '0000-00-00', 1),
+(14, 2, 4, 7, '2026-03-29', '0000-00-00', 1),
+(15, 1, 6, 4, '2026-03-29', '0000-00-00', 1);
 
 --
 -- Indeksy dla zrzutów tabel
 --
-
---
--- Indeksy dla tabeli `dane_firmy`
---
-ALTER TABLE `dane_firmy`
-  ADD PRIMARY KEY (`Id_firmy`);
 
 --
 -- Indeksy dla tabeli `dostawcy`
@@ -239,12 +212,6 @@ ALTER TABLE `klienci`
   ADD KEY `login_id` (`login_id`);
 
 --
--- Indeksy dla tabeli `kurierzy`
---
-ALTER TABLE `kurierzy`
-  ADD PRIMARY KEY (`id_kuriera`);
-
---
 -- Indeksy dla tabeli `loginy`
 --
 ALTER TABLE `loginy`
@@ -264,18 +231,11 @@ ALTER TABLE `produkty`
 ALTER TABLE `zamowienia`
   ADD PRIMARY KEY (`id_zamowienia`),
   ADD KEY `id_klienta` (`id_klienta`),
-  ADD KEY `id_produktu` (`id_produktu`),
-  ADD KEY `id_kuriera` (`id_kuriera`);
+  ADD KEY `id_produktu` (`id_produktu`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
-
---
--- AUTO_INCREMENT for table `dane_firmy`
---
-ALTER TABLE `dane_firmy`
-  MODIFY `Id_firmy` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `dostawcy`
@@ -293,19 +253,13 @@ ALTER TABLE `kategoria`
 -- AUTO_INCREMENT for table `klienci`
 --
 ALTER TABLE `klienci`
-  MODIFY `id_klienta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `kurierzy`
---
-ALTER TABLE `kurierzy`
-  MODIFY `id_kuriera` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_klienta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `loginy`
 --
 ALTER TABLE `loginy`
-  MODIFY `id_loginu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id_loginu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- AUTO_INCREMENT for table `produkty`
@@ -317,7 +271,7 @@ ALTER TABLE `produkty`
 -- AUTO_INCREMENT for table `zamowienia`
 --
 ALTER TABLE `zamowienia`
-  MODIFY `id_zamowienia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_zamowienia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Constraints for dumped tables
@@ -341,8 +295,7 @@ ALTER TABLE `produkty`
 --
 ALTER TABLE `zamowienia`
   ADD CONSTRAINT `zamowienia_ibfk_1` FOREIGN KEY (`id_klienta`) REFERENCES `klienci` (`id_klienta`),
-  ADD CONSTRAINT `zamowienia_ibfk_2` FOREIGN KEY (`id_produktu`) REFERENCES `produkty` (`id_produktu`),
-  ADD CONSTRAINT `zamowienia_ibfk_3` FOREIGN KEY (`id_kuriera`) REFERENCES `kurierzy` (`id_kuriera`);
+  ADD CONSTRAINT `zamowienia_ibfk_2` FOREIGN KEY (`id_produktu`) REFERENCES `produkty` (`id_produktu`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

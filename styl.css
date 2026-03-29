@@ -5,6 +5,7 @@ body{
     height: 100vh;
     margin: 0;
     background-color: #a7bcb9;
+    overflow: hidden;
 }
 header{
     width: 100%;
@@ -21,6 +22,8 @@ main{
     width: 50%;
     height: 100%;
     float: left;
+    display: flex;
+    gap:20px;
 }
 #leftHeader>img{
     height: auto;
@@ -45,24 +48,46 @@ main{
     background-color: #283739;
     color: #e0e0e0;
 }
+#rightHeader input:hover{
+    cursor:pointer;
+}
 #rightHeader>button:hover{
     cursor: pointer;
 }
 #leftMain{
+    text-align: left;
     width: 33%;
     height: 100%;
     float: left;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+#leftMain p{
+    padding-left: 50px;
 }
 #centerMain{
     width: 33%;
     height: 100%;
     float: left;
     overflow: auto;
+    text-align: center;
+    overflow-y: auto;
+}
+#centerMain img{
+    float: left;
+    margin-top: 30px;
 }
 #rightMain{
     width: 33%;
     height: 100%;
     float: left;
+}
+#rightMain .topRow {
+    display: flex;       
+    align-items: center;    
+    gap: 20px;
+    width: 100%;              
 }
 footer{
     height: 10%;
@@ -90,8 +115,9 @@ footer{
     background-color: #e0ebeb;
     display:none;
     text-align: center;
-    border-radius: 30px;
+    border-radius: 30px 0px 0px 30px;
     box-shadow: 10px 9px 28px 7px #2c5d63;
+    overflow-y: scroll;
 }
 #createUserSection>p,#loginSection>p{
     font-weight: bold;
@@ -110,4 +136,16 @@ footer{
 }
 #createUserSection em:hover,#loginSection em:hover{
     cursor: pointer;
+}
+#productBlock{
+    padding: 20px;
+    width: 90%;
+    margin: 10px;
+    height: 170px;
+    border-radius: 30px;
+    text-align: right;
+    background-color: #c5d5c5;
+}
+#productBlock button:hover{
+    cursor:pointer;
 }
