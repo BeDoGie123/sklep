@@ -32,8 +32,8 @@
             <h1>Sklep spożywczy</h1>
         </aside>
         <aside id="rightHeader">
+            <?php echo "<p>".$_SESSION['user'];"</p>" ?>
             <form action="sklep.php" method="POST">
-                <?php echo "<p>".$_SESSION['user'];"</p>" ?>
                 <input type="submit" value="Wyloguj się" name="wylogujBtn">
                 <?php  
                     if(isset($_POST['wylogujBtn'])){

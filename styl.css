@@ -5,7 +5,7 @@ body{
     height: 100vh;
     margin: 0;
     background-color: #a7bcb9;
-    overflow: hidden;
+
 }
 header{
     width: 100%;
@@ -36,7 +36,10 @@ main{
     width: 50%;
     float: left;
     height: 100%;
-    text-align: right;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
 }
 #rightHeader>button{
     margin: 30px;
@@ -148,4 +151,49 @@ footer{
 }
 #productBlock button:hover{
     cursor:pointer;
+}
+@media only screen and (max-width:356px){
+    body {
+        height: auto;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+    header {
+        height: auto;
+    }
+    main {
+        height: auto;
+        flex: 1;
+    }
+    footer {
+        height: auto;
+    }
+    #leftMain{
+        float: none;
+        width: 100%;
+    }
+    #centerMain{
+        float: none;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    }
+    #createUserSection{
+        height: 500px;
+        border-radius: 30px;
+        overflow-x: hidden;
+        margin: 30px 10px 10px 10px;
+        box-shadow: 10px 9px 28px 1px #2c5d63;
+    }
+    #rightMain{
+        float: none;
+        width: 100%;
+    }
+    #rightHeader>p{
+        display: none;
+    }
+    
 }

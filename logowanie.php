@@ -133,7 +133,6 @@
         function createUser(){
             document.getElementById('createUserSection').style.display="block";
             document.getElementById('loginSection').style.display="none";
-            document.getElementById('info').innerHTML="";
         }
         function login(){
             document.getElementById('createUserSection').style.display="none";
