@@ -4,6 +4,11 @@
     if(!isset($_SESSION['koszyk'])){
         $_SESSION['koszyk'] = [];
     }
+    
+    if(!isset($_SESSION['user'])){
+        header("Location:logowanie.php");
+        exit;
+    }
 
 
     if(isset($_POST['dodajDoKoszyka'])){
@@ -57,7 +62,7 @@
                 $sql="SELECT A.* FROM klienci AS A INNER JOIN loginy ON loginy.id_loginu=A.login_id WHERE loginy.login='".$_SESSION['user']."'";
                 $query=mysqli_query($conn,$sql);
                 $result=mysqli_fetch_row($query);
-                echo "<p>Twoje dane:</p>";
+                echo "<p><strong>Twoje dane:</strong></p>";
                 echo "<ul>";
                 echo "<li>$result[1] $result[2]</li>";
                 echo "<li>$result[3]</li>";
@@ -70,21 +75,78 @@
 
         <section id="centerMain">
             <h2>Nasze produkty</h2>
+            <form action="sklep.php" method="post">
+                <select name="kategoria" id="kategoria">
+                    <option value="nic"></option>
+                    <?php 
+                         $sql="SELECT nazwa_kategori FROM kategoria";
+                         $query=mysqli_query($conn,$sql);
+
+                         while($result=mysqli_fetch_assoc($query)){
+                            echo "<option value=".$result['nazwa_kategori'].">".$result['nazwa_kategori']."</option>";
+                         }
+                    ?>
+                </select>
+                <input type="submit" value="Wyszukaj" name="searchCategory" id="searchBtn">
+            </form>
+
             <?php  
-                $sql="SELECT * FROM produkty";
-                $query=mysqli_query($conn,$sql);
+            
+                if(isset($_POST['searchCategory'])){
+                    if($_POST['kategoria']!="nic"){
+                        $kat=$_POST['kategoria'];
+                        $sql="SELECT produkty.* FROM produkty INNER JOIN kategoria USING (id_kategorii) WHERE kategoria.nazwa_kategori='$kat'";
+                        $query=mysqli_query($conn,$sql);
                 
-                while($result=mysqli_fetch_assoc($query)){  
-                    echo "<section id='productBlock'>";
-                    echo "<img src='{$result['zdjecie']}'>";
-                    echo "<h4>{$result['nazwa_produktu']}</h4>";
-                    echo "<p>{$result['cena_produktu']} zł<br />Sztuki: {$result['ilosc_produktu']}<br />Ilość na stanie: {$result['sztuki']}</p>";
-                    echo "<form action='sklep.php' method='post'>";
-                    echo "<input type='hidden' name='produkt_id' value='{$result['id_produktu']}'>";
-                    echo "<input type='submit' name='dodajDoKoszyka' value='Dodaj do koszyka'>";
-                    echo "</form>";
-                    echo "</section>";
+
+                        while($result=mysqli_fetch_assoc($query)){  
+                            echo "<section id='productBlock'>";
+                            echo "<img src='{$result['zdjecie']}'>";
+                            echo "<h4>{$result['nazwa_produktu']}</h4>";
+                            echo "<p>{$result['cena_produktu']} zł<br />Sztuki: {$result['ilosc_produktu']}<br />Ilość na stanie: {$result['sztuki']}</p>";
+                            echo "<form action='sklep.php' method='post'>";
+                            echo "<input type='hidden' name='produkt_id' value='{$result['id_produktu']}'>";
+                            echo "<input type='submit' name='dodajDoKoszyka' value='Dodaj do koszyka'>";
+                            echo "</form>";
+                            echo "</section>";
+                        }
+                    }
+                    else{
+                        $sql="SELECT * FROM produkty";
+                        $query=mysqli_query($conn,$sql);
+                        
+        
+                        while($result=mysqli_fetch_assoc($query)){  
+                            echo "<section id='productBlock'>";
+                            echo "<img src='{$result['zdjecie']}'>";
+                            echo "<h4>{$result['nazwa_produktu']}</h4>";
+                            echo "<p>{$result['cena_produktu']} zł<br />Sztuki: {$result['ilosc_produktu']}<br />Ilość na stanie: {$result['sztuki']}</p>";
+                            echo "<form action='sklep.php' method='post'>";
+                            echo "<input type='hidden' name='produkt_id' value='{$result['id_produktu']}'>";
+                            echo "<input type='submit' name='dodajDoKoszyka' value='Dodaj do koszyka'>";
+                            echo "</form>";
+                            echo "</section>";
+                        }
+                    }
+                }else{
+                    $sql="SELECT * FROM produkty";
+                        $query=mysqli_query($conn,$sql);
+                        
+        
+                        while($result=mysqli_fetch_assoc($query)){  
+                            echo "<section id='productBlock'>";
+                            echo "<img src='{$result['zdjecie']}'>";
+                            echo "<h4>{$result['nazwa_produktu']}</h4>";
+                            echo "<p>{$result['cena_produktu']} zł<br />Sztuki: {$result['ilosc_produktu']}<br />Ilość na stanie: {$result['sztuki']}</p>";
+                            echo "<form action='sklep.php' method='post'>";
+                            echo "<input type='hidden' name='produkt_id' value='{$result['id_produktu']}'>";
+                            echo "<input type='submit' name='dodajDoKoszyka' value='Dodaj do koszyka'>";
+                            echo "</form>";
+                            echo "</section>";
+                        }
                 }
+
+
             ?>
         </section>
         

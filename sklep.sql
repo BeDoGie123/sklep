@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 29, 2026 at 11:54 PM
+-- Generation Time: Mar 30, 2026 at 09:32 AM
 -- Wersja serwera: 10.4.32-MariaDB
 -- Wersja PHP: 8.2.12
 
@@ -74,7 +74,7 @@ INSERT INTO `dostawcy` (`id_dostawcy`, `nazwa`, `adres`, `kod_pocztowy`, `miasto
 --
 
 CREATE TABLE `kategoria` (
-  `id_kategori` int(11) NOT NULL,
+  `id_kategorii` int(11) NOT NULL,
   `nazwa_kategori` varchar(50) NOT NULL,
   `opis` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -83,10 +83,12 @@ CREATE TABLE `kategoria` (
 -- Dumping data for table `kategoria`
 --
 
-INSERT INTO `kategoria` (`id_kategori`, `nazwa_kategori`, `opis`) VALUES
+INSERT INTO `kategoria` (`id_kategorii`, `nazwa_kategori`, `opis`) VALUES
 (1, 'Owoce', 'owoce '),
 (2, 'Pieczywo', 'Chleb i bułki'),
-(3, 'Warzywa', 'warzywa');
+(3, 'Warzywa', 'warzywa'),
+(4, 'Grzyby', 'grzyby'),
+(5, 'Inne', 'różne inne');
 
 -- --------------------------------------------------------
 
@@ -158,9 +160,13 @@ CREATE TABLE `produkty` (
 --
 
 INSERT INTO `produkty` (`id_produktu`, `nazwa_produktu`, `cena_produktu`, `ilosc_produktu`, `sztuki`, `id_kategorii`, `id_dostawcy`, `zdjecie`) VALUES
-(1, 'jabłko', 4, 6, 985, 1, 2, 'apple.png'),
+(1, 'jabłko', 4, 6, 981, 1, 2, 'apple.png'),
 (2, 'Bagietka', 7, 1, 17, 2, 3, 'baguette.png'),
-(3, 'Marchewka', 1, 1, 48, 3, 1, 'carrot.png');
+(3, 'Marchewka', 1, 1, 47, 3, 1, 'carrot.png'),
+(4, 'Croissant', 5, 1, 50, 2, 1, 'croissant.png'),
+(5, 'Mufinka', 8, 1, 10, 5, 1, 'muffin.png'),
+(6, 'Grzyby', 15, 30, 70, 4, 1, 'mushroom.png'),
+(7, 'Sos pomidorowy', 9, 1, 42, 5, 1, 'tomato-sauce.png');
 
 -- --------------------------------------------------------
 
@@ -186,7 +192,10 @@ INSERT INTO `zamowienia` (`id_zamowienia`, `id_produktu`, `id_klienta`, `cena_ko
 (12, 1, 4, 8, '2026-03-29', '0000-00-00', 2),
 (13, 3, 4, 1, '2026-03-29', '0000-00-00', 1),
 (14, 2, 4, 7, '2026-03-29', '0000-00-00', 1),
-(15, 1, 6, 4, '2026-03-29', '0000-00-00', 1);
+(15, 1, 6, 4, '2026-03-29', '0000-00-00', 1),
+(16, 1, 4, 16, '2026-03-30', '0000-00-00', 4),
+(17, 3, 4, 1, '2026-03-30', '0000-00-00', 1),
+(18, 7, 4, 9, '2026-03-30', '0000-00-00', 1);
 
 --
 -- Indeksy dla zrzutów tabel
@@ -202,7 +211,7 @@ ALTER TABLE `dostawcy`
 -- Indeksy dla tabeli `kategoria`
 --
 ALTER TABLE `kategoria`
-  ADD PRIMARY KEY (`id_kategori`);
+  ADD PRIMARY KEY (`id_kategorii`);
 
 --
 -- Indeksy dla tabeli `klienci`
@@ -247,7 +256,7 @@ ALTER TABLE `dostawcy`
 -- AUTO_INCREMENT for table `kategoria`
 --
 ALTER TABLE `kategoria`
-  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_kategorii` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `klienci`
@@ -265,13 +274,13 @@ ALTER TABLE `loginy`
 -- AUTO_INCREMENT for table `produkty`
 --
 ALTER TABLE `produkty`
-  MODIFY `id_produktu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_produktu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `zamowienia`
 --
 ALTER TABLE `zamowienia`
-  MODIFY `id_zamowienia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_zamowienia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- Constraints for dumped tables
@@ -288,7 +297,7 @@ ALTER TABLE `klienci`
 --
 ALTER TABLE `produkty`
   ADD CONSTRAINT `produkty_ibfk_1` FOREIGN KEY (`id_dostawcy`) REFERENCES `dostawcy` (`id_dostawcy`),
-  ADD CONSTRAINT `produkty_ibfk_2` FOREIGN KEY (`id_kategorii`) REFERENCES `kategoria` (`id_kategori`);
+  ADD CONSTRAINT `produkty_ibfk_2` FOREIGN KEY (`id_kategorii`) REFERENCES `kategoria` (`id_kategorii`);
 
 --
 -- Constraints for table `zamowienia`

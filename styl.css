@@ -5,7 +5,7 @@ body{
     height: 100vh;
     margin: 0;
     background-color: #a7bcb9;
-
+    overflow: hidden;
 }
 header{
     width: 100%;
@@ -158,6 +158,7 @@ footer{
         min-height: 100vh;
         display: flex;
         flex-direction: column;
+        overflow: auto;
     }
     header {
         height: auto;
@@ -196,4 +197,11 @@ footer{
         display: none;
     }
     
+}
+#leftMain li:hover{
+    color: aliceblue;
+}
+#searchBtn{
+    background: #2c5d63;
+    color: aliceblue;
 }
