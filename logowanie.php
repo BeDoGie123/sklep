@@ -4,6 +4,10 @@
         header("Location:sklep.php");
         exit;
     }
+    if(isset($_SESSION['admin'])){
+        header("Location:admin.php");
+        exit;
+    }
 ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -42,17 +46,26 @@
                     if(isset($_POST['loginBtn'])){
                     $l = $_POST["loginF"];
                     $h = sha1($_POST["passwordF"]);
-
+                    
                     $query = "SELECT login, haslo FROM loginy WHERE login='$l' AND haslo='$h'";
                     $result = mysqli_query($conn,$query);
 
-                    if(mysqli_num_rows($result) > 0){
-                        $_SESSION['user'] = $l;
-                        header("Location:sklep.php");
+                    $query2 = "SELECT login, haslo FROM admin WHERE login='$l' AND haslo='$h'";
+                    $result2 = mysqli_query($conn,$query2);
+                    if(mysqli_num_rows($result2) > 0){
+                        $_SESSION['admin'] = $l;
+                        header("Location:admin.php");
                         exit;
-                    } else {
-                        echo "<p id='info'>złe dane</p>";
+                    }else{
+                        if(mysqli_num_rows($result) > 0){
+                            $_SESSION['user'] = $l;
+                            header("Location:sklep.php");
+                            exit;
+                        } else {
+                            echo "<p id='info'>złe dane</p>";
+                        }
                     }
+
                 }
 
                 ?>

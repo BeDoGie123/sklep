@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 30, 2026 at 09:32 AM
+-- Generation Time: Apr 09, 2026 at 08:28 PM
 -- Wersja serwera: 10.4.32-MariaDB
 -- Wersja PHP: 8.2.12
 
@@ -22,6 +22,25 @@ SET time_zone = "+00:00";
 --
 CREATE DATABASE IF NOT EXISTS `sklep` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `sklep`;
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `admin`
+--
+
+CREATE TABLE `admin` (
+  `id_admin` int(11) NOT NULL,
+  `login` varchar(30) NOT NULL,
+  `haslo` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`id_admin`, `login`, `haslo`) VALUES
+(1, 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997');
 
 -- --------------------------------------------------------
 
@@ -160,13 +179,13 @@ CREATE TABLE `produkty` (
 --
 
 INSERT INTO `produkty` (`id_produktu`, `nazwa_produktu`, `cena_produktu`, `ilosc_produktu`, `sztuki`, `id_kategorii`, `id_dostawcy`, `zdjecie`) VALUES
-(1, 'jabłko', 4, 6, 981, 1, 2, 'apple.png'),
+(1, 'jabłko', 4, 6, 980, 1, 2, 'apple.png'),
 (2, 'Bagietka', 7, 1, 17, 2, 3, 'baguette.png'),
-(3, 'Marchewka', 1, 1, 47, 3, 1, 'carrot.png'),
+(3, 'Marchewka', 1, 1, 46, 3, 1, 'carrot.png'),
 (4, 'Croissant', 5, 1, 50, 2, 1, 'croissant.png'),
 (5, 'Mufinka', 8, 1, 10, 5, 1, 'muffin.png'),
 (6, 'Grzyby', 15, 30, 70, 4, 1, 'mushroom.png'),
-(7, 'Sos pomidorowy', 9, 1, 42, 5, 1, 'tomato-sauce.png');
+(7, 'Sos pomidorowy', 9, 1, 40, 5, 1, 'tomato-sauce.png');
 
 -- --------------------------------------------------------
 
@@ -195,11 +214,21 @@ INSERT INTO `zamowienia` (`id_zamowienia`, `id_produktu`, `id_klienta`, `cena_ko
 (15, 1, 6, 4, '2026-03-29', '0000-00-00', 1),
 (16, 1, 4, 16, '2026-03-30', '0000-00-00', 4),
 (17, 3, 4, 1, '2026-03-30', '0000-00-00', 1),
-(18, 7, 4, 9, '2026-03-30', '0000-00-00', 1);
+(18, 7, 4, 9, '2026-03-30', '0000-00-00', 1),
+(19, 1, 4, 4, '2026-04-09', '0000-00-00', 1),
+(20, 7, 4, 9, '2026-04-09', '0000-00-00', 1),
+(21, 3, 4, 1, '2026-04-09', '0000-00-00', 1),
+(22, 7, 4, 9, '2026-04-09', '0000-00-00', 1);
 
 --
 -- Indeksy dla zrzutów tabel
 --
+
+--
+-- Indeksy dla tabeli `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id_admin`);
 
 --
 -- Indeksy dla tabeli `dostawcy`
@@ -247,6 +276,12 @@ ALTER TABLE `zamowienia`
 --
 
 --
+-- AUTO_INCREMENT for table `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `dostawcy`
 --
 ALTER TABLE `dostawcy`
@@ -280,7 +315,7 @@ ALTER TABLE `produkty`
 -- AUTO_INCREMENT for table `zamowienia`
 --
 ALTER TABLE `zamowienia`
-  MODIFY `id_zamowienia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id_zamowienia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- Constraints for dumped tables

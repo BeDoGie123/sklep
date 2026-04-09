@@ -9,8 +9,16 @@
         header("Location:logowanie.php");
         exit;
     }
+    if(isset($_SESSION['admin'])){
+        header("Location:logowanie.php");
+        exit;
+    }
 
-
+    if(isset($_POST['zamow'])){
+        header("Location:zamow.php");
+        exit;
+    }
+ 
     if(isset($_POST['dodajDoKoszyka'])){
         $produkt_id = $_POST['produkt_id'];
 
@@ -37,7 +45,7 @@
             <h1>Sklep spożywczy</h1>
         </aside>
         <aside id="rightHeader">
-            <?php echo "<p>".$_SESSION['user'];"</p>" ?>
+            <?php echo "<p>".$_SESSION['user']."</p>"; ?>
             <form action="sklep.php" method="POST">
                 <input type="submit" value="Wyloguj się" name="wylogujBtn">
                 <?php  
@@ -178,10 +186,6 @@
                     echo "<input type='submit' name='zamow' value='Złóż zamówienie'>";
                     echo "</form>";
                 }
-                if(isset($_POST['zamow'])){
-                        header("Location:zamow.php");
-                        exit;
-                    }
             ?>
         </aside>
 
