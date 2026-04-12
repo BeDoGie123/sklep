@@ -1,13 +1,16 @@
 <?php 
     session_start();
-
+    if(!isset($_SESSION['admin'])){
+        header("Location: logowanie.php");
+        exit;
+    }
 ?>
 <!DOCTYPE html>
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sklep spożywczy</title> 
+    <title>Panel Administratora</title> 
     <link rel="icon" type="image/png" href="store.png">
     <link rel="stylesheet" href="styl.css">
 </head>
@@ -57,7 +60,7 @@
 
                             while($result=mysqli_fetch_assoc($query)){  
                                 echo "<section id='productBlockAdmin'>";
-                                echo "<img src='{$result['zdjecie']}'>";
+                                echo "<img src='{$result['zdjecie']}' alt='produkt'>";
                                 echo "<h4>{$result['nazwa_produktu']}</h4>";
                                 echo "<p>{$result['cena_produktu']} zł<br />Sztuki: {$result['ilosc_produktu']}<br />Ilość na stanie: {$result['sztuki']}</p>";
                                 echo "<form action='sklep.php' method='post'>";
@@ -73,7 +76,7 @@
             
                             while($result=mysqli_fetch_assoc($query)){  
                                 echo "<section id='productBlockAdmin'>";
-                                echo "<img src='{$result['zdjecie']}'>";
+                                echo "<img src='{$result['zdjecie']}' alt='produkt'>";
                                 echo "<h4>{$result['nazwa_produktu']}</h4>";
                                 echo "<p>{$result['cena_produktu']} zł<br />Sztuki: {$result['ilosc_produktu']}<br />Ilość na stanie: {$result['sztuki']}</p>";
                                 echo "<form action='sklep.php' method='post'>";
@@ -89,7 +92,7 @@
             
                             while($result=mysqli_fetch_assoc($query)){  
                                 echo "<section id='productBlockAdmin'>";
-                                echo "<img src='{$result['zdjecie']}'>";
+                                echo "<img src='{$result['zdjecie']}' alt='produkt'>";
                                 echo "<h4>{$result['nazwa_produktu']}</h4>";
                                 echo "<p>{$result['cena_produktu']} zł<br />Sztuki: {$result['ilosc_produktu']}<br />Ilość na stanie: {$result['sztuki']}</p>";
                                 echo "<form action='sklep.php' method='post'>";
@@ -104,7 +107,27 @@
         
         </aside>
         <section id="centerMain">
-            
+            <h2>Dodaj produkt</h2>
+            <form action="dodaj.php" method="post">
+                <p>Nazwa:</p><input type="text" name="nazwa" placeholder="Nazwa" required>
+                <p>Cena:</p><input type="number" step="0.01" name="cena" placeholder="Cena" required>
+                <p>Zdjęcie:</p><input type="text" name="foto" placeholder="Nazwa pliku (np. jablko.png)" required>
+                <p>Ilość:</p><input type="number" name="ilosc" placeholder="Ilość np. 4 (w jednej paczce)" required>
+                <p>Sztuki</p><input type="number" name="sztuki" placeholder="Sztuki dostepne" required>
+                <p>Kategoria: 
+                    <select name="id_kategorii" required>
+                        <option value="">Wybierz kategorię</option>
+                        <?php 
+                            $sql_kat = "SELECT id_kategorii, nazwa_kategori FROM kategoria";
+                            $query_kat = mysqli_query($conn, $sql_kat);
+                            while($res_kat = mysqli_fetch_assoc($query_kat)){
+                                echo "<option value='".$res_kat['id_kategorii']."'>".$res_kat['nazwa_kategori']."</option>";
+                                }
+                                ?>
+                    </select>
+                </p>
+                <input type="submit" value="Dodaj produkt">
+            </form>
         </section>
         <aside id="rightMain"></aside>
     </main>

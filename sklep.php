@@ -109,7 +109,7 @@
 
                         while($result=mysqli_fetch_assoc($query)){  
                             echo "<section id='productBlock'>";
-                            echo "<img src='{$result['zdjecie']}'>";
+                            echo "<img src='{$result['zdjecie']}' alt='produkt'>";
                             echo "<h4>{$result['nazwa_produktu']}</h4>";
                             echo "<p>{$result['cena_produktu']} zł<br />Sztuki: {$result['ilosc_produktu']}<br />Ilość na stanie: {$result['sztuki']}</p>";
                             echo "<form action='sklep.php' method='post'>";
@@ -126,7 +126,7 @@
         
                         while($result=mysqli_fetch_assoc($query)){  
                             echo "<section id='productBlock'>";
-                            echo "<img src='{$result['zdjecie']}'>";
+                            echo "<img src='{$result['zdjecie']}' alt='produkt'>";
                             echo "<h4>{$result['nazwa_produktu']}</h4>";
                             echo "<p>{$result['cena_produktu']} zł<br />Sztuki: {$result['ilosc_produktu']}<br />Ilość na stanie: {$result['sztuki']}</p>";
                             echo "<form action='sklep.php' method='post'>";
@@ -143,7 +143,7 @@
         
                         while($result=mysqli_fetch_assoc($query)){  
                             echo "<section id='productBlock'>";
-                            echo "<img src='{$result['zdjecie']}'>";
+                            echo "<img src='{$result['zdjecie']}' alt='produkt'>";
                             echo "<h4>{$result['nazwa_produktu']}</h4>";
                             echo "<p>{$result['cena_produktu']} zł<br />Sztuki: {$result['ilosc_produktu']}<br />Ilość na stanie: {$result['sztuki']}</p>";
                             echo "<form action='sklep.php' method='post'>";
