@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 09, 2026 at 08:28 PM
+-- Generation Time: Apr 12, 2026 at 10:35 PM
 -- Wersja serwera: 10.4.32-MariaDB
 -- Wersja PHP: 8.2.12
 
@@ -135,7 +135,8 @@ INSERT INTO `klienci` (`id_klienta`, `imie`, `nazwisko`, `adres`, `miasto`, `kod
 (2, 'Dominika', 'Włodarczyk', 'ul. Grunwaldzka 38', 'Kuźnica Masłońska', '96-349', '987654321', 'Włodarczyk@gmail.com', NULL),
 (3, 'Igor', 'Janik', 'ul. Baczyńskiego 89', 'Łęczna', '31-775', '373512985', 'Janik@gmail.com', NULL),
 (4, 'Karolina', 'Stankiewicz', 'ul. Bracka 07', 'Koszalin', '01-971', '324345613', 'Stankiewicz@gmail.com', 60),
-(6, 'bartek', 'gajda', 'ulica 12', 'Pszów', '44-370', '123-456-789', 'moj_mail@gmail.com', 64);
+(6, 'bartek', 'gajda', 'ulica 12', 'Pszów', '44-370', '123-456-789', 'moj_mail@gmail.com', 64),
+(7, 'a', 'a', 'a', 'a', 'a', 'a', 'a@gmail.com', NULL);
 
 -- --------------------------------------------------------
 
@@ -185,7 +186,8 @@ INSERT INTO `produkty` (`id_produktu`, `nazwa_produktu`, `cena_produktu`, `ilosc
 (4, 'Croissant', 5, 1, 50, 2, 1, 'croissant.png'),
 (5, 'Mufinka', 8, 1, 10, 5, 1, 'muffin.png'),
 (6, 'Grzyby', 15, 30, 70, 4, 1, 'mushroom.png'),
-(7, 'Sos pomidorowy', 9, 1, 40, 5, 1, 'tomato-sauce.png');
+(7, 'Sos pomidorowy', 9, 1, 40, 5, 1, 'tomato-sauce.png'),
+(8, 'Husteczki', 10, 100, 30, 5, 1, 'husteczki.png');
 
 -- --------------------------------------------------------
 
@@ -297,19 +299,19 @@ ALTER TABLE `kategoria`
 -- AUTO_INCREMENT for table `klienci`
 --
 ALTER TABLE `klienci`
-  MODIFY `id_klienta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_klienta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `loginy`
 --
 ALTER TABLE `loginy`
-  MODIFY `id_loginu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+  MODIFY `id_loginu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT for table `produkty`
 --
 ALTER TABLE `produkty`
-  MODIFY `id_produktu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_produktu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `zamowienia`
@@ -325,7 +327,7 @@ ALTER TABLE `zamowienia`
 -- Constraints for table `klienci`
 --
 ALTER TABLE `klienci`
-  ADD CONSTRAINT `klienci_ibfk_1` FOREIGN KEY (`login_id`) REFERENCES `loginy` (`id_loginu`);
+  ADD CONSTRAINT `klienci_ibfk_1` FOREIGN KEY (`login_id`) REFERENCES `loginy` (`id_loginu`) ON DELETE SET NULL;
 
 --
 -- Constraints for table `produkty`

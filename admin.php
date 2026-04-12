@@ -129,7 +129,23 @@
                 <input type="submit" value="Dodaj produkt">
             </form>
         </section>
-        <aside id="rightMain"></aside>
+        <aside id="rightMain">
+            <h4>Użytkownicy</h4>
+            <?php  
+                $sql="SELECT * FROM loginy";
+                $query=mysqli_query($conn,$sql);
+                        
+                while($result=mysqli_fetch_assoc($query)){
+                    echo "<section id='userSectionAdmin'>";
+                    echo "<p>" . $result['login'] . "</p>";
+                    echo "<form action='usunKonto.php' method='POST'>";
+                    echo "<input type='hidden' name='userId' value='" . $result['id_loginu'] . "'>";
+                    echo "<input type='submit' value='Usuń użytkownika'>";
+                    echo "</form>";
+                    echo "</section>";
+                }
+            ?>
+        </aside>
     </main>
 
     <footer>
